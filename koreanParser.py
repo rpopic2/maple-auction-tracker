@@ -9,3 +9,7 @@ def parseNum(input: str) -> int:
         return parseNum(input + '만')
     else:
         return int(input)
+
+def parseCmd(input:str):
+    input = input.replace(' ', '')
+    return input.split(',')
