@@ -1,16 +1,35 @@
 from tkinter import *
 from tkinter import ttk
+import datagen
+
+lastCommand = ''
+
+
+def onEnter(e):
+    lastCommand = mainEntry.get()
+
+
+def clearMainEntry(first):
+    mainEntry.delete(0, "end")
+
 
 root = Tk()
 root.title("메이플 옥션 트래커")
 frm = ttk.Frame(root, padding=10)
 frm.grid()
 
-ttk.Entry(frm).grid(column=0, row= 0)
-ttk.Label(frm, text="안녕").grid(column=0, row=2)
-ttk.Button(frm, text="Enter", command=None).grid(column=1, row=0)
+mainEntry = ttk.Entry(frm)
+mainEntry.grid(row=0, column=0)
+mainEntry.focus()
 
 
-ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=1)
+ttk.Button(frm, text="Enter", command=None).grid(row=0, column=1)
+root.bind("<Return>", onEnter)
+root.bind("<Control-c>", exit)
+root.bind("<Control-d>", exit)
+root.bind("<Control-l>", clearMainEntry)
+
+
+ttk.Button(frm, text="종료", command=root.destroy).grid(row=2, column=1)
 
 root.mainloop()
