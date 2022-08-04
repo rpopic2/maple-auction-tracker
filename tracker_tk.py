@@ -57,7 +57,6 @@ root.bind("<Return>", dummyOnEnter)
 root.bind("<Control-d>", exit)
 root.bind("<Control-l>", clearMainEntry)
 root.bind("<Up>", loadLastCmd)
-root.bind("<Control-r>", loadLastCmd)
 
 outputLable = ttk.Label(frm, text="?를 입력하여 도움말 표시")
 outputLable.grid(row=2, column=0)

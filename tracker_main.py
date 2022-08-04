@@ -13,12 +13,16 @@ lastEnteredItem = None
 if not exists(datagen.dataSet):
     datagen.initdata('default', 'tracker')
 
+__version__ = 1.0
 
 def cmd(input: str):
     commands = parseCmd(input)
     match commands[0]:
         case '?':
-            return showHelp()
+            result = f"메이플 옥션 트래커 v.{__version__} by 스카니아 seauma" + showHelp()
+            return result
+        case '버전':
+            return __version__
         case '새파일':
             datagen.initdata(commands[1], commands[2])
         case '불러오기':
