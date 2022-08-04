@@ -25,3 +25,7 @@ def testwrite():
     with open('test_tracker.csv', "w") as file:
         writer = csv.writer(file)
         writer.writerow(['hello', 'world'])
+
+def initdata(worldname, customname):
+    file = open(f'{worldname}_{customname}.csv', 'x')
+    file.close()
