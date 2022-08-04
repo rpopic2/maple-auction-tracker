@@ -11,5 +11,4 @@ def parseNum(input: str) -> int:
         return int(input)
 
 def parseCmd(input:str):
-    input = input.replace(', ', ',')
-    return input.split(',')
+    return input.split(' ')
