@@ -4,14 +4,14 @@ import pandas as pd
 
 head = ['itemname', 'price', 'date']
 dateformat = "%Y/%m/%d_%H:%M"
-dataSet = 'default_tracker.csv'
+dataSet = 'default_0.csv'
 
 
 def addEntry(itemname, price, time):
     with open(dataSet, 'a', encoding='utf-8-sig', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([itemname, price, str(
-           time)])
+            time)])
 
 
 def initdata(worldname, customname):
@@ -26,3 +26,5 @@ def setDataSet(commands):
     dataSet = f"{commands[1]}_{commands[2]}.csv"
     file = open(dataSet, 'r')
     file.close()
+    with open('options', 'w', encoding='utf-8-sig') as file:
+        file.write(dataSet)

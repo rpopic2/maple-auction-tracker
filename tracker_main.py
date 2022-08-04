@@ -11,7 +11,7 @@ lastViewdItem = None
 lastEnteredItem = None
 
 if not exists(datagen.dataSet):
-    datagen.initdata('default', 'tracker')
+    datagen.initdata('default', '0')
 
 __version__ = 1.0
 

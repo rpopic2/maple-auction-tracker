@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from pandas import DataFrame
 import tracker_main
+import datagen
 import matplotlib.pyplot as plt
 
 lastCommand = ''
@@ -19,6 +20,8 @@ def onEnter():
         result = tracker_main.cmd(lastCommand)
         if result is None:
             write("처리 성공")
+            if lastCommand.startswith("불러오기"):
+                updateDataSetLable()
         else:
             write(result)
             if lastCommand.startswith("그래프"):
@@ -41,6 +44,11 @@ def loadLastCmd(dummy):
 def write(message: str):
     outputLable.config(text=message)
 
+def updateDataSetLable():
+    dataSetLable.config(text=datagen.dataSet)
+
+with open("options", encoding='utf-8-sig') as file:
+    datagen.dataSet = file.read()
 
 root = Tk()
 root.title("메이플 옥션 트래커")
@@ -58,8 +66,12 @@ root.bind("<Control-d>", exit)
 root.bind("<Control-l>", clearMainEntry)
 root.bind("<Up>", loadLastCmd)
 
+dataSetLable = ttk.Label(frm)
+dataSetLable.grid(row=2, column=0)
+updateDataSetLable()
+
 outputLable = ttk.Label(frm, text="?를 입력하여 도움말 표시")
-outputLable.grid(row=2, column=0)
+outputLable.grid(row=3, column=0)
 
 
 root.mainloop()
