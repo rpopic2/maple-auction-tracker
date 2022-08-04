@@ -3,12 +3,14 @@ import csv
 import pandas as pd
 
 head = ['itemname', 'price', 'date']
+dateformat = "%Y/%m/%d_%H:%M"
 
 
 def addEntry(itemname, price):
     with open('test_tracker.csv', 'a', encoding='utf-8-sig', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([itemname, price, str(datetime.now().strftime("%Y/%m/%d_%H:%M"))])
+        writer.writerow([itemname, price, str(
+            datetime.now().strftime(dateformat))])
 
 
 def getData():

@@ -1,6 +1,8 @@
 from koreanParser import *
 import datagen
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
 
 
 def cmd(input: str):
@@ -19,8 +21,9 @@ def cmd(input: str):
         case '그래프':
             df = view(commands[1])
             plt.plot(df['date'] ,df['price'])
+            plt.gcf().autofmt_xdate()
             plt.show()
-            return df["price"]
+            return df
 
         case _:
             datagen.addEntry(commands[0], parseNum(commands[1]))
