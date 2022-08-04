@@ -1,31 +1,22 @@
-from datetime import date
+from datetime import datetime
 import csv
+import pandas as pd
 
 head = ['itemname', 'price', 'date']
-data = 'itemname,price,date'
 
 
 def addEntry(itemname, price):
-    global data
-    data += f"\n{itemname},{price},{str(date.today())}"
-
-    with open('test_tracker.csv', 'w') as file:
+    with open('test_tracker.csv', 'a', encoding='utf-8-sig', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(head)
-        writer.writerow([itemname, price, str(date.today())])
+        writer.writerow([itemname, price, str(datetime.now().strftime("%Y/%m/%d_%H:%M"))])
 
 
 def getData():
-    with open("test_tracker.csv") as file:
-        csvData = csv.reader(file)
-    return csvData
+    return pd.read_csv('test_tracker.csv')
 
-
-def testwrite():
-    with open('test_tracker.csv', "w") as file:
-        writer = csv.writer(file)
-        writer.writerow(['hello', 'world'])
 
 def initdata(worldname, customname):
     file = open(f'{worldname}_{customname}.csv', 'x')
+    writer = csv.write(file)
+    writer.writerow(head)
     file.close()
