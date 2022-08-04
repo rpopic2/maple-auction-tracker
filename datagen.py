@@ -21,8 +21,8 @@ def initdata(worldname, customname):
     file.close()
 
 
-def setDataSet(name: str):
+def setDataSet(commands):
     global dataSet
-    dataSet = name
-    file = open(name, 'r')
+    dataSet = f"{commands[1]}_{commands[2]}.csv"
+    file = open(dataSet, 'r')
     file.close()

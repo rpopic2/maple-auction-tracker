@@ -19,10 +19,10 @@ def cmd(input: str):
     match commands[0]:
         case '?':
             return showHelp()
-        case '초기화':
+        case '새파일':
             datagen.initdata(commands[1], commands[2])
-        case '데이터세트':
-            datagen.setDataSet(commands[1])
+        case '불러오기':
+            datagen.setDataSet(commands)
         case '보기':
             return view(commands)
         case '그래프':
