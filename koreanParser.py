@@ -1,4 +1,6 @@
 def parseNum(input: str) -> int:
+    if ',' in input:
+        input = input.replace(',', '')
     if '만' in input:
         i = input.index('만')
         n = float(input[:i])

@@ -10,3 +10,4 @@ class datagentest(unittest.TestCase):
         self.assertEqual(25000, koreanParser.parseNum("2.5"))
         self.assertEqual(25000, koreanParser.parseNum("2.5만"))
         self.assertEqual(25000, koreanParser.parseNum("25000"))
+        self.assertEqual(25000, koreanParser.parseNum("25,000"))
