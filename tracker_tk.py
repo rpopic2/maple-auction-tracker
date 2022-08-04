@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter import ttk
-import datagen
+import tracker_main
 
 lastCommand = ''
 
 
 def onEnter(e):
     lastCommand = mainEntry.get()
+    tracker_main.cmd(lastCommand)
 
 
 def clearMainEntry(first):

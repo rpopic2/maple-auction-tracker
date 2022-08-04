@@ -4,12 +4,12 @@ def parseNum(input: str) -> int:
     if '만' in input:
         i = input.index('만')
         n = float(input[:i])
-        return n * 10000
+        return int(n * 10000)
     elif '.' in input:
         return parseNum(input + '만')
     else:
         return int(input)
 
 def parseCmd(input:str):
-    input = input.replace(' ', '')
+    input = input.replace(', ', ',')
     return input.split(',')
