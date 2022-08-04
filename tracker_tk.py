@@ -34,6 +34,7 @@ def clearMainEntry(dummy):
 
 def loadLastCmd(dummy):
     global lastCommand
+    clearMainEntry(None)
     mainEntry.insert(0, lastCommand)
 
 
