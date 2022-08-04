@@ -1,34 +1,86 @@
+from os.path import exists
+from dateutil import parser
+from datetime import datetime
 from koreanParser import *
 import datagen
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import pandas as pd
 
+lastViewdItem = None
+lastEnteredItem = None
+
+if not exists(datagen.dataSet):
+    datagen.initdata('default', 'tracker')
 
 
 def cmd(input: str):
     commands = parseCmd(input)
     match commands[0]:
         case '?':
-            return "{아이템 이름} {가격} : 새로운 아이템과  가격 등록. 아이템 이름에 뛰어쓰기 X\n초기화 {서버이름} {캐릭터이름} : 새로운 데이터 세트 생성"
+            return showHelp()
         case '초기화':
             datagen.initdata(commands[1], commands[2])
+        case '데이터세트':
+            datagen.setDataSet(commands[1])
         case '보기':
-            df = datagen.getData()
-            if len(commands) == 1:
-                return df
-            else:
-                return df.loc[df['itemname'] == commands[1]]
+            return view(commands)
         case '그래프':
-            df = view(commands[1])
-            plt.plot(df['date'] ,df['price'])
-            plt.gcf().autofmt_xdate()
-            plt.show()
-            return df
-
+            return graphcmd(commands)
         case _:
-            datagen.addEntry(commands[0], parseNum(commands[1]))
+            return register(commands)
 
 
-def view(itemname):
-    df = datagen.getData()
+def showHelp():
+    file = open('help.txt', encoding='utf-8-sig')
+    data = file.read()
+    file.close()
+    return data
+
+
+def register(commands):
+    if len(commands) != 1:
+        global lastEnteredItem
+        global lastViewdItem
+        lastEnteredItem = commands[0]
+        lastViewdItem = commands[0]
+    if len(commands) != 3:
+        commands.append(datetime.now().strftime(datagen.dateformat))
+    elif len(commands) == 3:
+        commands[2] = parser.parse(commands[2]).strftime(datagen.dateformat)
+    datagen.addEntry(lastEnteredItem, parseNum(commands[1]), commands[2])
+    return "추가 완료"
+
+
+def view(commands):
+    df = getData()
+    if len(commands) == 1:
+        return df
+    else:
+        global lastViewdItem
+        lastViewdItem = commands[1]
+        return df.loc[df['itemname'] == commands[1]]
+
+
+def getData():
+    return pd.read_csv(datagen.dataSet)
+
+
+def graphcmd(commands):
+    if len(commands) != 1:
+        global lastViewdItem
+        lastViewdItem = commands[1]
+    return graph(lastViewdItem)
+
+
+def graph(itemname):
+    df = getbyname(itemname)
+    df['date'] = pd.to_datetime(df['date'], format=datagen.dateformat)
+    df = df.sort_values(by='date')
+    plt.plot(df['date'], df['price'])
+    return df
+
+
+def getbyname(itemname):
+    df = getData()
     return df.loc[df['itemname'] == itemname]
