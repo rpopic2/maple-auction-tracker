@@ -39,9 +39,17 @@ def cmd(input: str):
             return view_all(commands)
         case '그래프':
             return graphcmd(commands)
+        case '지우기':
+            plt.clf()
+            plt.show()
         case _:
-            graph(commands[0])
-            return view_singleItem(getData(), commands[0])
+            try:
+                num = parseNum(commands[0])
+                if len(commands) == 1:
+                    commands.append(None)
+                return register(lastViewdItem, commands[0], commands[1])
+            except Exception as e:
+                return view_singleItem(getData(), commands[0])
 
 
 def showHelp():
@@ -51,17 +59,13 @@ def showHelp():
     return result + data
 
 
-def register(commands):
-    if len(commands) != 1:
-        global lastViewdItem
-        lastEnteredItem = commands[0]
-        lastViewdItem = commands[0]
-    if len(commands) != 3:
-        commands.append(datetime.now().strftime(datagen.dateformat))
-    elif len(commands) == 3:
-        commands[2] = parser.parse(commands[2]).strftime(datagen.dateformat)
-    datagen.addEntry(lastEnteredItem, parseNum(commands[1]), commands[2])
-    return view_singleItem(getData(), lastEnteredItem)
+def register(itemname, price, time=None):
+    if time is None:
+        time = datetime.now().strftime(datagen.dateformat)
+    else:
+        time = parser.parse(time).strftime(datagen.dateformat)
+    datagen.addEntry(itemname, parseNum(price), time)
+    return view_singleItem(getData(), itemname)
 
 
 def view_all(commands):
@@ -72,6 +76,7 @@ def view_all(commands):
 def view_singleItem(df, itemname):
     global lastViewdItem
     lastViewdItem = itemname
+    graph(itemname)
     return df.loc[df['itemname'] == itemname]
 
 def getData():
