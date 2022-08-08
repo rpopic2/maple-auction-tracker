@@ -3,9 +3,12 @@ import csv
 from http import server
 import pandas as pd
 
+DEFAULT_CSV_NAME = 'default.csv'
+DEFAULT_FILE_NAME = 'default'
+
 head = ['itemname', 'price', 'date']
 dateformat = "%Y/%m/%d_%H:%M"
-dataSet = 'default_0.csv'
+dataSet = DEFAULT_CSV_NAME
 
 
 def addEntry(itemname, price, time):

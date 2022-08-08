@@ -18,7 +18,7 @@ with open("options", encoding='utf-8-sig') as file:
     datagen.dataSet = file.read()
 
 if not exists(datagen.dataSet):
-    datagen.initdata('default', '0')
+    datagen.initdata(datagen.DEFAULT_FILE_NAME)
 
 __version__ = 1.1
 
