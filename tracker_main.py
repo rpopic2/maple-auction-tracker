@@ -22,6 +22,7 @@ if not exists(datagen.dataSet):
 
 __version__ = 1.1
 
+
 def cmd(input: str):
     commands = parseCmd(input)
     match commands[0]:
@@ -37,11 +38,10 @@ def cmd(input: str):
             os.startfile(datagen.dataSet)
         case '전체':
             return view_all(commands)
-        case '그래프':
-            return graphcmd(commands)
         case '지우기':
-            plt.clf()
-            plt.show()
+            cancel_df = getData().iloc[:-1]
+            cancel_df.to_csv(datagen.dataSet, index=False)
+            return getData()
         case _:
             try:
                 num = parseNum(commands[0])
@@ -51,6 +51,9 @@ def cmd(input: str):
             except Exception as e:
                 return view_singleItem(getData(), commands[0])
 
+def clfgraph():
+    plt.clf()
+    plt.show()
 
 def showHelp():
     result = f"메이플 옥션 트래커 v.{__version__} by 스카니아 seauma"
@@ -73,11 +76,13 @@ def view_all(commands):
     if len(commands) == 1:
         return df
 
+
 def view_singleItem(df, itemname):
     global lastViewdItem
     lastViewdItem = itemname
     graph(itemname)
     return df.loc[df['itemname'] == itemname]
+
 
 def getData():
     return pd.read_csv(datagen.dataSet)

@@ -1,6 +1,7 @@
 from sys import *
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 import pandas as pd
 from pandas import DataFrame
@@ -19,6 +20,10 @@ def onEnter():
     global lastCommand
     lastCommand = mainEntry.get()
     try:
+        if(lastCommand.startswith('지우기')):
+            answer =  messagebox.askyesno('지우기', '정말로 가장 마지막에 입력한 정보를 지우시겠습니까?')
+            if not answer:
+                return
         result = tracker_main.cmd(lastCommand)
         if result is None:
             write("처리 성공")
@@ -26,13 +31,13 @@ def onEnter():
                 print_welcome_screen()
         else:
             write(result)
-            plt.show()
     except Exception as err:
         write(f"처리 실패 : {err.args[0]}")
-    clearMainEntry(None)
+    plt.show()
+    clearMainEntry()
 
 
-def clearMainEntry(dummy):
+def clearMainEntry(dummy=None):
     mainEntry.delete(0, "end")
 
 
