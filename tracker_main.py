@@ -40,6 +40,7 @@ def cmd(input: str):
         case '그래프':
             return graphcmd(commands)
         case _:
+            graph(commands[0])
             return view_singleItem(getData(), commands[0])
 
 

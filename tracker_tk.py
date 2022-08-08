@@ -26,8 +26,7 @@ def onEnter():
                 print_welcome_screen()
         else:
             write(result)
-            if lastCommand.startswith("그래프"):
-                plt.show()
+            plt.show()
     except Exception as err:
         write(f"처리 실패 : {err.args[0]}")
     clearMainEntry(None)
