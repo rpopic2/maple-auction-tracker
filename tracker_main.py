@@ -38,6 +38,8 @@ def cmd(input: str):
             os.startfile(datagen.dataSet)
         case '전체':
             return view_all(commands)
+        case '그래프지우기':
+            clfgraph()
         case '지우기':
             cancel_df = getData().iloc[:-1]
             cancel_df.to_csv(datagen.dataSet, index=False)
@@ -45,11 +47,17 @@ def cmd(input: str):
         case _:
             try:
                 num = parseNum(commands[0])
-                if len(commands) == 1:
-                    commands.append(None)
-                return register(lastViewdItem, commands[0], commands[1])
+                return registerCmd(commands)
             except Exception as e:
+                if len(commands) != 1:
+                    view_singleItem(getData(), commands[0])
+                    return registerCmd(commands[1:])
                 return view_singleItem(getData(), commands[0])
+            
+def registerCmd(commands):
+    if len(commands) == 1:
+        commands.append(None)
+    return register(lastViewdItem, commands[0], commands[1])
 
 def clfgraph():
     plt.clf()

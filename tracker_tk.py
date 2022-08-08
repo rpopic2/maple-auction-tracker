@@ -19,11 +19,14 @@ def dummyOnEnter(e):
 def onEnter():
     global lastCommand
     lastCommand = mainEntry.get()
+    if(lastCommand.startswith('지우기')):
+        answer =  messagebox.askyesno('지우기', '정말로 가장 마지막에 입력한 정보를 지우시겠습니까?')
+        if not answer:
+            return
+    elif(lastCommand == ''):
+        print_welcome_screen()
+        return
     try:
-        if(lastCommand.startswith('지우기')):
-            answer =  messagebox.askyesno('지우기', '정말로 가장 마지막에 입력한 정보를 지우시겠습니까?')
-            if not answer:
-                return
         result = tracker_main.cmd(lastCommand)
         if result is None:
             write("처리 성공")
@@ -40,6 +43,10 @@ def onEnter():
 def clearMainEntry(dummy=None):
     mainEntry.delete(0, "end")
 
+def clfgraph(dummy=None):
+    plt.clf()
+    tracker_main.graph(tracker_main.lastViewdItem)
+    plt.show()
 
 def loadLastCmd(dummy):
     global lastCommand
@@ -65,12 +72,11 @@ frm.grid()
 
 mainEntry = ttk.Entry(frm)
 mainEntry.grid(row=0, column=0)
-mainEntry.focus()
 
 ttk.Button(frm, text="Enter", command=onEnter).grid(row=0, column=1)
 root.bind("<Return>", dummyOnEnter)
 root.bind("<Control-d>", exit)
-root.bind("<Control-l>", clearMainEntry)
+root.bind("<Control-l>", clfgraph)
 root.bind("<Up>", loadLastCmd)
 
 statusbarLable = ttk.Label(frm)
@@ -80,5 +86,8 @@ print_welcome_screen()
 
 outputLable.grid(row=3, column=0)
 
+plt.clf()
+plt.show()
+mainEntry.focus()
 
 root.mainloop()
