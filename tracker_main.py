@@ -30,9 +30,9 @@ def cmd(input: str):
         case '버전':
             return __version__
         case '새파일':
-            datagen.initdata(commands[1], commands[2])
+            datagen.initdata(commands[1])
         case '불러오기':
-            datagen.setDataSet(commands[1], commands[2])
+            datagen.setDataSet(commands[1])
         case '열기':
             os.startfile(datagen.dataSet)
         case '전체':

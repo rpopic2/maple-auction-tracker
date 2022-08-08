@@ -15,16 +15,16 @@ def addEntry(itemname, price, time):
             time)])
 
 
-def initdata(worldname, customname):
-    file = open(f'{worldname}_{customname}.csv', 'x')
+def initdata(filename):
+    file = open(f'{filename}.csv', 'x')
     writer = csv.writer(file)
     writer.writerow(head)
     file.close()
 
 
-def setDataSet(servername, index):
+def setDataSet(filename):
     global dataSet
-    dataSet = f"{servername}_{index}.csv"
+    dataSet = f"{filename}.csv"
     file = open(dataSet, 'r')
     file.close()
     with open('options', 'w', encoding='utf-8-sig') as file:
