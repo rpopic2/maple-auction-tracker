@@ -1,5 +1,4 @@
 import unittest
-import datagen
 import koreanParser
 from datetime import date
 
@@ -16,7 +15,3 @@ class parsertest(unittest.TestCase):
     def test_parse_command(self):
         self.assertEqual(["아무개아이템", "2.5만"], koreanParser.parseCmd("아무개아이템 2.5만"))
         self.assertEqual(["레인디어의창", "2.5만"], koreanParser.parseCmd("레인디어의창 2.5만"))
-
-
-class test_tracker_main(unittest.TestCase):
-    pass

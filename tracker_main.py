@@ -10,17 +10,23 @@ import pandas as pd
 lastViewdItem = None
 lastEnteredItem = None
 
+if not exists("options"):
+    with open("options", 'x', encoding='utf-8-sig') as f:
+        f.write(datagen.dataSet)
+
+with open("options", encoding='utf-8-sig') as file:
+    datagen.dataSet = file.read()
+
 if not exists(datagen.dataSet):
     datagen.initdata('default', '0')
 
-__version__ = 1.0
+__version__ = 1.1
 
 def cmd(input: str):
     commands = parseCmd(input)
     match commands[0]:
         case '?':
-            result = f"메이플 옥션 트래커 v.{__version__} by 스카니아 seauma" + showHelp()
-            return result
+            return showHelp()
         case '버전':
             return __version__
         case '새파일':
@@ -36,10 +42,11 @@ def cmd(input: str):
 
 
 def showHelp():
+    result = f"메이플 옥션 트래커 v.{__version__} by 스카니아 seauma"
     file = open('help.txt', encoding='utf-8-sig')
     data = file.read()
     file.close()
-    return data
+    return result + data
 
 
 def register(commands):
@@ -53,7 +60,7 @@ def register(commands):
     elif len(commands) == 3:
         commands[2] = parser.parse(commands[2]).strftime(datagen.dateformat)
     datagen.addEntry(lastEnteredItem, parseNum(commands[1]), commands[2])
-    return "추가 완료"
+    return view_singleItem(getData(), lastEnteredItem)
 
 
 def view(commands):
@@ -65,6 +72,8 @@ def view(commands):
         lastViewdItem = commands[1]
         return df.loc[df['itemname'] == commands[1]]
 
+def view_singleItem(df, itemname):
+    return df.loc[df['itemname'] == itemname]
 
 def getData():
     return pd.read_csv(datagen.dataSet)

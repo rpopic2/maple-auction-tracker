@@ -1,6 +1,8 @@
+from sys import *
 from tkinter import *
 from tkinter import ttk
 
+import pandas as pd
 from pandas import DataFrame
 import tracker_main
 import datagen
@@ -45,13 +47,11 @@ def write(message: str):
     outputLable.config(text=message)
 
 def updateDataSetLable():
-    dataSetLable.config(text=datagen.dataSet)
+    statusbarLable.config(text=datagen.dataSet)
 
-with open("options", encoding='utf-8-sig') as file:
-    datagen.dataSet = file.read()
 
 root = Tk()
-root.title("메이플 옥션 트래커")
+root.title(f"메이플 옥션 트래커 v.{tracker_main.__version__}")
 frm = ttk.Frame(root, padding=10)
 frm.grid()
 
@@ -66,11 +66,15 @@ root.bind("<Control-d>", exit)
 root.bind("<Control-l>", clearMainEntry)
 root.bind("<Up>", loadLastCmd)
 
-dataSetLable = ttk.Label(frm)
-dataSetLable.grid(row=2, column=0)
+statusbarLable = ttk.Label(frm)
+statusbarLable.grid(row=2, column=0)
 updateDataSetLable()
+df = tracker_main.getData()
+getHelpText = "?를 입력하여 도움말 표시"
+uniques = df.drop_duplicates(subset='itemname', keep='last')
+outputLable = ttk.Label(frm)
+outputLable.config(text=f"{getHelpText}\n{datagen.dataSet}\n{uniques}")
 
-outputLable = ttk.Label(frm, text="?를 입력하여 도움말 표시")
 outputLable.grid(row=3, column=0)
 
 
