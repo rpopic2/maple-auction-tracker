@@ -46,9 +46,8 @@ def cmd(input: str):
 
 def showHelp():
     result = f"메이플 옥션 트래커 v.{__version__} by 스카니아 seauma"
-    file = open('help.txt', encoding='utf-8-sig')
-    data = file.read()
-    file.close()
+    with open('help.txt', encoding='utf-8-sig') as file:
+        data = file.read()
     return result + data
 
 
