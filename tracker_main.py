@@ -9,7 +9,6 @@ import matplotlib.dates as mdates
 import pandas as pd
 
 lastViewdItem = None
-lastEnteredItem = None
 
 if not exists("options"):
     with open("options", 'x', encoding='utf-8-sig') as f:
@@ -41,7 +40,7 @@ def cmd(input: str):
         case '그래프':
             return graphcmd(commands)
         case _:
-            return register(commands)
+            return view_singleItem(getData(), commands[0])
 
 
 def showHelp():
@@ -53,7 +52,6 @@ def showHelp():
 
 def register(commands):
     if len(commands) != 1:
-        global lastEnteredItem
         global lastViewdItem
         lastEnteredItem = commands[0]
         lastViewdItem = commands[0]
