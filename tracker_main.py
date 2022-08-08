@@ -33,7 +33,7 @@ def cmd(input: str):
         case '새파일':
             datagen.initdata(commands[1], commands[2])
         case '불러오기':
-            datagen.setDataSet(commands)
+            datagen.setDataSet(commands[1], commands[2])
         case '열기':
             os.startfile(datagen.dataSet)
         case '보기':

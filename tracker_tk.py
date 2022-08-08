@@ -48,6 +48,7 @@ def write(message: str):
 
 def print_welcome_screen():
     statusbarLable.config(text=datagen.dataSet)
+    df = tracker_main.getData()
     uniques = df.drop_duplicates(subset='itemname', keep='last')
     outputLable.config(text=f"{getHelpText}\n{uniques}")
 
@@ -70,7 +71,6 @@ root.bind("<Up>", loadLastCmd)
 
 statusbarLable = ttk.Label(frm)
 statusbarLable.grid(row=2, column=0)
-df = tracker_main.getData()
 outputLable = ttk.Label(frm)
 print_welcome_screen()
 

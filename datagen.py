@@ -1,5 +1,6 @@
 from datetime import datetime
 import csv
+from http import server
 import pandas as pd
 
 head = ['itemname', 'price', 'date']
@@ -21,9 +22,9 @@ def initdata(worldname, customname):
     file.close()
 
 
-def setDataSet(commands):
+def setDataSet(servername, index):
     global dataSet
-    dataSet = f"{commands[1]}_{commands[2]}.csv"
+    dataSet = f"{servername}_{index}.csv"
     file = open(dataSet, 'r')
     file.close()
     with open('options', 'w', encoding='utf-8-sig') as file:
