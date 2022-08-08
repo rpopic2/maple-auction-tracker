@@ -49,8 +49,9 @@ def cmd(input: str):
                 num = parseNum(commands[0])
                 return registerCmd(commands)
             except Exception as e:
-                if len(commands) != 1:
-                    view_singleItem(getData(), commands[0])
+                if len(commands) != 1:#on additional numbers input
+                    global lastViewdItem
+                    lastViewdItem = commands[0]
                     return registerCmd(commands[1:])
                 return view_singleItem(getData(), commands[0])
             
