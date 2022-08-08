@@ -36,8 +36,8 @@ def cmd(input: str):
             datagen.setDataSet(commands[1], commands[2])
         case '열기':
             os.startfile(datagen.dataSet)
-        case '보기':
-            return view(commands)
+        case '전체':
+            return view_all(commands)
         case '그래프':
             return graphcmd(commands)
         case _:
@@ -65,16 +65,14 @@ def register(commands):
     return view_singleItem(getData(), lastEnteredItem)
 
 
-def view(commands):
+def view_all(commands):
     df = getData()
     if len(commands) == 1:
         return df
-    else:
-        global lastViewdItem
-        lastViewdItem = commands[1]
-        return df.loc[df['itemname'] == commands[1]]
 
 def view_singleItem(df, itemname):
+    global lastViewdItem
+    lastViewdItem = itemname
     return df.loc[df['itemname'] == itemname]
 
 def getData():
