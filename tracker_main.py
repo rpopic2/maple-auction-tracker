@@ -1,4 +1,5 @@
 from os.path import exists
+import os
 from dateutil import parser
 from datetime import datetime
 from koreanParser import *
@@ -33,6 +34,8 @@ def cmd(input: str):
             datagen.initdata(commands[1], commands[2])
         case '불러오기':
             datagen.setDataSet(commands)
+        case '열기':
+            os.startfile(datagen.dataSet)
         case '보기':
             return view(commands)
         case '그래프':

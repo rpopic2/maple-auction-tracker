@@ -23,7 +23,7 @@ def onEnter():
         if result is None:
             write("처리 성공")
             if lastCommand.startswith("불러오기"):
-                updateDataSetLable()
+                print_welcome_screen()
         else:
             write(result)
             if lastCommand.startswith("그래프"):
@@ -46,9 +46,10 @@ def loadLastCmd(dummy):
 def write(message: str):
     outputLable.config(text=message)
 
-def updateDataSetLable():
+def print_welcome_screen():
     statusbarLable.config(text=datagen.dataSet)
-
+    uniques = df.drop_duplicates(subset='itemname', keep='last')
+    outputLable.config(text=f"{getHelpText}\n{uniques}")
 
 root = Tk()
 root.title(f"메이플 옥션 트래커 v.{tracker_main.__version__}")
@@ -68,12 +69,10 @@ root.bind("<Up>", loadLastCmd)
 
 statusbarLable = ttk.Label(frm)
 statusbarLable.grid(row=2, column=0)
-updateDataSetLable()
 df = tracker_main.getData()
 getHelpText = "?를 입력하여 도움말 표시"
-uniques = df.drop_duplicates(subset='itemname', keep='last')
 outputLable = ttk.Label(frm)
-outputLable.config(text=f"{getHelpText}\n{datagen.dataSet}\n{uniques}")
+print_welcome_screen()
 
 outputLable.grid(row=3, column=0)
 
